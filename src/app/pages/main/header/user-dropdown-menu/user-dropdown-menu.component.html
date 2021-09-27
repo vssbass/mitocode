@@ -1,0 +1,31 @@
+<li class="nav-item dropdown user-menu">
+  <a
+    class="nav-link dropdown-toggle"
+    data-toggle="dropdown"
+    (click)="toggleDropdownMenu()"
+  >
+    <img
+      [src]="user.image"
+      class="user-image img-circle elevation-2"
+      alt="User Image"
+    />
+  </a>
+  <ul #dropdownMenu class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+    <!-- User image -->
+    <li class="user-header bg-primary">
+      <img [src]="user.image" class="img-circle elevation-2" alt="User Image" />
+
+      <p>
+        {{ userData.nombres+' - '+ userData.rol }}
+        <small></small>
+      </p>
+    </li>
+
+    <!-- Menu Footer-->
+    <li class="user-footer">
+      <a (click)="logout()" class="btn btn-default btn-flat float-right"
+        >Salir</a
+      >
+    </li>
+  </ul>
+</li>

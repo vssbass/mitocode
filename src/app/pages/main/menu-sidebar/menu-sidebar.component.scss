@@ -1,0 +1,72 @@
+.main-sidebar {
+  height: 100vh;
+  overflow: scroll;
+}
+.sidebar-taxiamistad {
+  background-color: #1e2022!important;
+}
+.text-dark {
+  color: #5a5c69 !important;
+}
+.text-white {
+  color: #ffffff !important;
+}
+
+.nav-item > .nav-link {
+  color: #ffffff !important;
+}
+.nav-header{
+  color: #ffffff;
+}
+
+.brand-link {
+  color: #ffffff;
+}
+a {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.caret::before {
+  /*content: "\25B6";
+  color: black;*/
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */
+  transform: rotate(90deg);
+}
+
+.nested {
+  display: none;
+  list-style: none;
+}
+
+.active {
+  display: block;
+}
+
+ul.nested.active {
+
+  background-color: #fff;
+  border-radius: 35px;
+  margin: 5px;
+}
+
+aside.main-sidebar.sidebar-taxiamistad.elevation-4 > a > img {
+  width: 100%;
+  height: auto;
+}

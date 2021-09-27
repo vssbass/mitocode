@@ -1,0 +1,14 @@
+<button
+  [type]="type"
+  class="btn btn-block"
+  style="background-color:#007bff!important;border-color:#007bff!important;box-shadow: 0 0 0 0.2rem #007bff!important;color:#fff"
+  [disabled]="disabled"
+>
+  {{ text }}
+  <span
+    *ngIf="loading"
+    class="spinner-border spinner-border-sm"
+    role="status"
+    aria-hidden="true"
+  ></span>
+</button>

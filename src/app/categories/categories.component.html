@@ -1,0 +1,184 @@
+<section class="content-header boletas-content">
+
+	<br>
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-sm-12">
+				<table id="tblCategorias"  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" datatable="ng" class="table table-striped">
+					<thead>
+						<tr>
+							<th>N°</th>
+							<th>NOMBRE</th>
+							<th>DESCRIPCION</th>
+							<th>ESTADO</th>
+							<th>ACCIONES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr  *ngFor="let categorias of listCategoria,index as id" >
+							<td>{{id + 1}}</td>
+							<td>{{ categorias.nombre }}</td>
+							<td>{{ categorias.descripcion }}</td>
+							<td>{{ categorias.situacion }}</td>
+							<td>
+								<div class="btn-group" role="group">
+									<button
+										class="btn btn-warning"
+										id="btnDetalleCategoria"
+										value="categorias.codigo"
+										(click)="detalleCategoria(categorias.codigo)"
+										data-toggle="modal"
+										data-target="#modalDetalleCategoria"
+									>Editar
+									</button>
+									
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="contenedor">
+		<button 
+		class="botonAgregarCategoria"
+		id="btnAgregarCategoria"
+		
+		data-toggle="modal"
+		data-target="#modalAgregarCategoria"
+		>
+			<span>+</span>
+		</button>
+	</div>
+</section>
+
+
+<!-- Modal editar-->
+<div class="modal fade" id="modalDetalleCategoria" tabindex="-1" aria-labelledby="modalDetalleCategoria" aria-hidden="true">
+  	<div class="modal-dialog modal-lg lg">
+    	<div class="modal-content">
+      		<div class="modal-header">
+				<h5 class="modal-title" id="infoBoleta">Detalle de Categoría</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+      		</div>
+      	    <div class="modal-body">
+            	<div class="animated fadeIn">
+                	<div class="row">
+                		<div class="col-sm-12">
+							<form
+								[formGroup]="detalleFormUpd"
+								(ngSubmit)="guardarDetCategoriaModal()"
+								>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="updnomCategoria">Nombre de Categoría</label>
+										<input type="text" class="form-control" id="updnomCategoria" formControlName="updnomCategoria" required>
+										<input type="text" hidden class="form-control" id="updCodCategoria" formControlName="updCodCategoria" required readonly>
+									</div>
+								
+									<div class="form-group col-sm-6">
+										<label for="updComboSituacion">Situacion</label>
+										<select
+										class="form-control"
+										id="updComboSituacion"
+										formControlName="updComboSituacion"
+										[(ngModel)]="selectedSituacion">
+										<option *ngFor="let estado of listComboEstado" [value]="estado.flag">{{ estado.descripcion }}</option>
+										</select>
+									</div>
+								
+
+								</div>
+								
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="updDetallesCategoria">Descripción</label>
+										<textarea type="text" class="form-control" id="updDetallesCategoria" formControlName="updDetallesCategoria" required></textarea>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									<button
+										type="submit"
+										class="btn btn-primary"
+										[disabled]="detalleFormUpd.invalid"
+										id="btnGuardarUpdCategorie"
+										
+									>Guardar</button>
+								</div>
+							</form>
+                   
+                  		</div>
+                	</div>
+				</div>
+	   	  	</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal agregar-->
+<div class="modal fade" id="modalAgregarCategoria" tabindex="-1" aria-labelledby="modalAgregarCategoria" aria-hidden="true">
+	<div class="modal-dialog modal-lg lg">
+	  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="infoBoleta">Crear nueva Categoría</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+            	<div class="animated fadeIn">
+                	<div class="row">
+                		<div class="col-sm-12">
+							<form
+								[formGroup]="detalleFormNew"
+								(ngSubmit)="agregarCategoria()"
+								>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="newnomCategoria">Nombre de Categoría</label>
+										<input type="text" class="form-control" id="newnomCategoria" formControlName="newnomCategoria" required>
+									</div>
+								
+									<div class="form-group col-sm-6">
+										<label for="newComboSituacion">Situacion</label>
+										<select
+										class="form-control"
+										id="newComboSituacion"
+										formControlName="newComboSituacion"
+										[(ngModel)]="selectedSituacion">
+										<option *ngFor="let estado of listComboEstado" [value]="estado.flag">{{ estado.descripcion }}</option>
+										</select>
+									</div>
+								
+
+								</div>
+								
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="newDetallesCategoria">Descripción</label>
+										<textarea type="text" class="form-control" id="newDetallesCategoria" formControlName="newDetallesCategoria" required></textarea>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									<button
+										type="submit"
+										class="btn btn-primary"
+										[disabled]="detalleFormNew.invalid"
+									>Guardar</button>
+								</div>
+							</form>
+                   
+                  		</div>
+                	</div>
+				</div>
+	   	  	</div>
+	  </div>
+  </div>
+</div>

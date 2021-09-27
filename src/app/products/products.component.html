@@ -1,0 +1,204 @@
+<section class="content-header boletas-content">
+
+	<br>
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-sm-12">
+				<table id="tblProductos"  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" datatable="ng" class="table table-striped">
+					<thead>
+						<tr>
+							<th>N°</th>
+							<th>NOMBRE</th>
+							<th>CATEGORIA</th>
+							<th>PRECIO</th>
+							<th>ESTADO</th>
+							<th>ACCIONES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr  *ngFor="let productos of listProducto,index as id" >
+							<td>{{id + 1}}</td>
+							<td>{{ productos.nombre }}</td>
+							<td>{{ productos.categoria }}</td>
+							<td>{{ productos.precio }}</td>
+							<td>{{ productos.situacion }}</td>
+							<td>
+								<div class="btn-group" role="group">
+									<button
+										class="btn btn-warning"
+										id="btnDetalleProducto"
+										value="productos.codigo"
+										(click)="detalleProducto(productos.codigo)"
+										data-toggle="modal"
+										data-target="#modalDetalleProducto"
+									>Editar
+									</button>
+									
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="contenedor">
+		<button 
+		class="botonAgregarProducto"
+		id="btnAgregarProducto"
+		
+		data-toggle="modal"
+		data-target="#modalAgregarProducto"
+		>
+			<span>+</span>
+		</button>
+	</div>
+</section>
+
+
+<!-- Modal editar-->
+<div class="modal fade" id="modalDetalleProducto" tabindex="-1" aria-labelledby="modalDetalleProducto" aria-hidden="true">
+  	<div class="modal-dialog modal-lg lg">
+    	<div class="modal-content">
+      		<div class="modal-header">
+				<h5 class="modal-title" id="infoBoleta">Detalle de Producto</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+      		</div>
+      	    <div class="modal-body">
+            	<div class="animated fadeIn">
+                	<div class="row">
+                		<div class="col-sm-12">
+							<form
+								[formGroup]="detalleFormUpd"
+								(ngSubmit)="guardarDetProductoModal()"
+								>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="updnombreProducto">Nombre de Producto</label>
+										<input type="text" class="form-control" id="updnombreProducto" formControlName="updnombreProducto" required>
+										<input type="text" hidden class="form-control" id="updCodProducto" formControlName="updCodProducto" required readonly>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="updComboSituacion">Categoria</label>
+										<select
+										class="form-control"
+										id="updcomboCategoria"
+										formControlName="updcomboCategoria"
+										[(ngModel)]="selectedCategoria">
+										<option *ngFor="let categoria of listCategoria" [value]="categoria.codigo">{{ categoria.nombre }}</option>
+										</select>
+									</div>
+								
+									<div class="form-group col-sm-4">
+										<label for="updComboSituacion">Situacion</label>
+										<select
+										class="form-control"
+										id="updComboSituacion"
+										formControlName="updComboSituacion"
+										[(ngModel)]="selectedSituacion">
+										<option *ngFor="let estado of listComboEstado" [value]="estado.flag">{{ estado.descripcion }}</option>
+										</select>
+									</div>
+
+									<div class="form-group col-sm-2">
+										<label for="updDetallesPrecio">Precio</label>
+										<input type="text" class="form-control" id="updDetallesPrecio" formControlName="updDetallesPrecio" required>
+									</div>
+								</div>
+
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									<button
+										type="submit"
+										class="btn btn-primary"
+										[disabled]="detalleFormUpd.invalid"
+										id="btnGuardarUpdProduct"
+										
+									>Guardar</button>
+								</div>
+							</form>
+                   
+                  		</div>
+                	</div>
+				</div>
+	   	  	</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal agregar-->
+<div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalAgregarProducto" aria-hidden="true">
+	<div class="modal-dialog modal-lg lg">
+	  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="infoBoleta">Crear nueva Producto</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+            	<div class="animated fadeIn">
+                	<div class="row">
+                		<div class="col-sm-12">
+							<form
+								[formGroup]="detalleFormNew"
+								(ngSubmit)="agregarProducto()"
+								>
+								<div class="row">
+									<div class="form-group col-sm-12">
+										<label for="newnomProducto">Nombre de Producto</label>
+										<input type="text" class="form-control" id="newnomProducto" formControlName="newnomProducto" required>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label for="newComboSituacion">Categoria</label>
+										<select
+										class="form-control"
+										id="newComboCategoria"
+										formControlName="newComboCategoria"
+										[(ngModel)]="selectedCategoria">
+										<option *ngFor="let categoria of listCategoria" [value]="categoria.codigo">{{ categoria.nombre }}</option>
+										</select>
+									</div>
+								
+									<div class="form-group col-sm-4">
+										<label for="newComboSituacion">Situacion</label>
+										<select
+										class="form-control"
+										id="newComboSituacion"
+										formControlName="newComboSituacion"
+										[(ngModel)]="selectedSituacion">
+										<option *ngFor="let estado of listComboEstado" [value]="estado.flag">{{ estado.descripcion }}</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-2">
+										<label for="newDetallesPrecio">Precio</label>
+										<input type="text" class="form-control" id="newDetallesPrecio" formControlName="newDetallesPrecio" required>
+									</div>
+								</div>
+						
+						
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									<button
+										type="submit"
+										class="btn btn-primary"
+										[disabled]="detalleFormNew.invalid"
+									>Guardar</button>
+								</div>
+							</form>
+                   
+                  		</div>
+                	</div>
+				</div>
+	   	  	</div>
+	  </div>
+  </div>
+</div>
